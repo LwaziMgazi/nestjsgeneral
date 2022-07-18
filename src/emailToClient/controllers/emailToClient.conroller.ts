@@ -6,7 +6,7 @@ const nodemailer=require('nodemailer');
 export class EmailToClientController{
     @Post('client')
    async emailToClient(@Body() emailContent: any){
-       console.log('lets send email.')
+       console.log('lets send email.',emailContent)
 
        try {
         // let testAccount = await nodemailer.createTestAccount();

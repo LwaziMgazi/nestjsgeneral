@@ -23,5 +23,11 @@ export class MaboItemsRepository {
             {new: true}
         )
     }
+
+    async addItem(maboItem: any) {
+        let newItem = new this.maboItemModel(maboItem);
+
+        newItem.save()
+    }
     
 }

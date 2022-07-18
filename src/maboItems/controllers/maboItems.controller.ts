@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 import { ImaboItems } from "src/model/maboItems";
 import { MaboItemsRepository } from "../repositories/maboItems.repository";
 
@@ -18,5 +18,10 @@ export class MaboItemsController {
    @Put('item/:id')
    async updateItem(@Param('id') _id : string, @Body() changes: Partial<ImaboItems>){
     return this.maboItemsRepository.updateItem(_id,changes);
+   }
+
+   @Post('item')
+   async addItem(@Body() newMaboItem){
+       return this.maboItemsRepository.addItem(newMaboItem);
    }
  }
