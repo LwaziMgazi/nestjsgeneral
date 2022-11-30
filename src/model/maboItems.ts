@@ -37,4 +37,10 @@ export const maboItem=[
     estimatedPrice: string,
     addedPrices: Array<any>
   }
+
+  export interface IEvents {
+    refToUser: string,
+    eventName: string,
+    items: Array<ImaboItems>
+  }
   

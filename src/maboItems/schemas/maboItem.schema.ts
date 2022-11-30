@@ -5,4 +5,4 @@ export const maboItemSchema = new mongoose.Schema({
     title: String,
     estimatedPrice: String,
     addedPrices: Array,
-})
+});
