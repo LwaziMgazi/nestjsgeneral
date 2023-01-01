@@ -6,7 +6,6 @@ const nodemailer=require('nodemailer');
 export class EmailToClientController{
     @Post('client')
    async emailToClient(@Body() emailContent: any){
-       console.log('lets send email.',emailContent)
 
        try {
         // let testAccount = await nodemailer.createTestAccount();
@@ -19,20 +18,51 @@ export class EmailToClientController{
                 user: "lwazi@airstudent.co.za", // generated ethereal user
                 pass: "IloveGod@2", // generated ethereal password
               },
+               tls:{
+           rejectUnauthorized:false
+         }
          });
          
         // send mail with defined transport object
+        console.log('Tooo','<'+ emailContent.emailFrom +'>')
         let info = await transporter.sendMail({
             from: '<lwazi@airstudent.co.za>', // sender address
-            to: "ntshangasent@gmail.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
+            to: emailContent.emailTo, // list of receivers
+            subject: "New Book order", // Subject line
+            text: "Order Details", // plain text body
+            html: this.getHtml(emailContent), // html body
         });
-        console.log('Sent')
+        console.log('Sent',info)
 
        }catch(error) {
          console.log(error);
+         throw new Error(error);
        }
+    }
+
+
+    getHtml(emailContent: any) {
+      if(emailContent.emailReportType === 'contact') {
+          return `<h2>Hi a pontential client is trying to contact you<br> Info: <br>
+          <lu>
+            <li>name: ${emailContent.name}</li>
+            <li>email: ${emailContent.email}</li>
+            <li>phone: ${emailContent.phone}</li>
+            <li>subject: ${emailContent.subject}</li>
+            <li>message : ${emailContent.message}</li>
+          </lu></h2>`
+      } else if ( emailContent.emailReportType === 'order'){
+        return `You have recieved an order from the following:<br>
+        <ul>
+           <li>Client Email : ${ emailContent.emailFrom}</li>
+           <li>Client Name : ${emailContent.clientName}</li>
+           <li>Client Surname : ${emailContent.clientSurname}</li>
+           <li>Country :${emailContent.country} </li>
+           <li>City : ${emailContent.city} </li>
+           <li>State : ${emailContent.state} </li>
+           <li>Street : ${emailContent. street} </li>
+        </ul><br> <h3>The client have ordered the following book: ${emailContent.bookOrdered}</h3>`
+      }
+
     }
 }
