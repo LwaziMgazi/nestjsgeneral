@@ -10,6 +10,7 @@ import { UsersService } from './users/users.service';
 import { UsersModule} from './users/users.module';
 import { EventsModule} from './Events/events.module';
 
+
 @Module({
   imports: [
     EmailToClientModule, 
