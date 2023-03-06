@@ -1,9 +1,12 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Res } from "@nestjs/common";
+import { EmailToClientHtmlService } from "src/shared/services/emailToClientHtml.service";
 //import {nodemailer} from 'nodemailer';
 const nodemailer=require('nodemailer');
 
 @Controller('email')
 export class EmailToClientController{
+
+   constructor(private emailToClientHtmlService:EmailToClientHtmlService) {}
     @Post('client')
    async emailToClient(@Body() emailContent: any){
 
@@ -30,7 +33,7 @@ export class EmailToClientController{
             to: emailContent.emailTo, // list of receivers
             subject: "New Book order", // Subject line
             text: "Order Details", // plain text body
-            html: this.getHtml(emailContent), // html body
+            html: this.emailToClientHtmlService.getHtml(emailContent), // html body
         });
         console.log('Sent',info)
 
@@ -40,29 +43,11 @@ export class EmailToClientController{
        }
     }
 
-
-    getHtml(emailContent: any) {
-      if(emailContent.emailReportType === 'contact') {
-          return `<h2>Hi a pontential client is trying to contact you<br> Info: <br>
-          <lu>
-            <li>name: ${emailContent.name}</li>
-            <li>email: ${emailContent.email}</li>
-            <li>phone: ${emailContent.phone}</li>
-            <li>subject: ${emailContent.subject}</li>
-            <li>message : ${emailContent.message}</li>
-          </lu></h2>`
-      } else if ( emailContent.emailReportType === 'order'){
-        return `You have recieved an order from the following:<br>
-        <ul>
-           <li>Client Email : ${ emailContent.emailFrom}</li>
-           <li>Client Name : ${emailContent.clientName}</li>
-           <li>Client Surname : ${emailContent.clientSurname}</li>
-           <li>Country :${emailContent.country} </li>
-           <li>City : ${emailContent.city} </li>
-           <li>State : ${emailContent.state} </li>
-           <li>Street : ${emailContent. street} </li>
-        </ul><br> <h3>The client have ordered the following book: ${emailContent.bookOrdered}</h3>`
-      }
-
+    @Get('download')
+    download(@Res() res) {
+      return res.download('src/shared/files/Curriculum_Vitae_of_SLNtshangase.pdf');
     }
+
+
+   
 }

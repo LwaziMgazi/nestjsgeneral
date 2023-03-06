@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import { UsersModule} from './users/users.module';
 import { EventsModule} from './Events/events.module';
+import {EmailToClientHtmlService} from './shared/services/emailToClientHtml.service';
 
 
 @Module({
@@ -21,7 +22,7 @@ import { EventsModule} from './Events/events.module';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService,EmailToClientHtmlService ]
  
 })
 export class AppModule {}

@@ -1,8 +1,5 @@
 import { Injectable,Inject} from '@nestjs/common';
 import {UsersRepository} from './repositories/users.repository';
-import { InjectRepository  } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-
 
 export type User = {
 id : number;
