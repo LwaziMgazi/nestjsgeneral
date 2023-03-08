@@ -27,6 +27,14 @@ export class EmailToClientHtmlService {
          <li>State : ${emailContent.state} </li>
          <li>Street : ${emailContent. street} </li>
       </ul><br> <h3>The client have ordered the following book: ${emailContent.bookOrdered}</h3>`
+    } else if(emailContent.emailReportType === 'meeting') {
+      return `<h2>Some one is trying to have a meeting with you <br>
+      <lu>
+        <li>time: ${JSON.stringify(emailContent.time)}</li>
+        <li>email: ${emailContent.nameAndSurname}</li>
+        <li>phone: ${emailContent.email}</li>
+        <li>subject: ${emailContent.shortProjectDescription}</li>
+      </lu></h2>`
     }
 
   }

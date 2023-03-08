@@ -27,7 +27,6 @@ export class EmailToClientController{
          });
          
         // send mail with defined transport object
-        console.log('Tooo','<'+ emailContent.emailFrom +'>')
         let info = await transporter.sendMail({
             from: '<lwazi@airstudent.co.za>', // sender address
             to: emailContent.emailTo, // list of receivers
