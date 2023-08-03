@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Res } from "@nestjs/common";
-import { EmailToClientHtmlService } from "src/shared/services/emailToClientHtml.service";
+import { EmailToClientHtmlService } from "../../shared/services/emailToClientHtml.service";
 //import {nodemailer} from 'nodemailer';
 const nodemailer=require('nodemailer');
 
@@ -35,6 +35,7 @@ export class EmailToClientController{
             html: this.emailToClientHtmlService.getHtml(emailContent), // html body
         });
         console.log('Sent',info)
+        return info;
 
        }catch(error) {
          console.log(error);

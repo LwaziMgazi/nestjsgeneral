@@ -15,10 +15,9 @@ export class EventRepository {
     findByemail(email: string) {
         return this.eventModel.find({ refToUser : email })
     }
-    
+     
     async updateEvent(id:string, changes:any){
         delete changes._id;
-        console.log('value of ID', id)
        return this.eventModel.findOneAndUpdate(
             {_id : id},
             changes,

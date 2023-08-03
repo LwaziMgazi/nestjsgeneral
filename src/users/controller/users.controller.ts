@@ -11,7 +11,6 @@ export class UsersController {
    @Get('users')
    async getAllUsers() {
     let users = (await this.usersRepository.findAllUsers());
-    console.log('------',users);
     return  users;
    }
 

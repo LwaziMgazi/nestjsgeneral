@@ -8,13 +8,15 @@ export class EmailToClientHtmlService {
 
   getHtml(emailContent: any) {
     if(emailContent.emailReportType === 'contact') {
-        return `<h2>Hi a pontential client is trying to contact you<br> Info: <br>
+        let heading = emailContent?.source ==='weddingWeb'?'Hi Malusi someone is enquiring':
+                  'Hi a pontential client is trying to contact you';
+        return `<h2>${heading}<br> Info: <br>
         <lu>
-          <li>name: ${emailContent.name}</li>
-          <li>email: ${emailContent.email}</li>
-          <li>phone: ${emailContent.phone}</li>
-          <li>subject: ${emailContent.subject}</li>
-          <li>message : ${emailContent.message}</li>
+          <li>name: ${emailContent.name || ''}</li>
+          <li>email: ${emailContent.email || ''}</li>
+          <li>phone: ${emailContent.phone || ''}</li>
+          <li>subject: ${emailContent.subject || ''}</li>
+          <li>message : ${emailContent.message || ''}</li>
         </lu></h2>`
     } else if ( emailContent.emailReportType === 'order'){
       return `You have recieved an order from the following:<br>
