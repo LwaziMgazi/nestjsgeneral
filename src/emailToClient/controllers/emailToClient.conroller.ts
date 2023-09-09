@@ -30,7 +30,7 @@ export class EmailToClientController{
         let info = await transporter.sendMail({
             from: '<lwazi@airstudent.co.za>', // sender address
             to: emailContent.emailTo, // list of receivers
-            subject: "New Book order", // Subject line
+            subject: "New al", // Subject line
             text: "Order Details", // plain text body
             html: this.emailToClientHtmlService.getHtml(emailContent), // html body
         });

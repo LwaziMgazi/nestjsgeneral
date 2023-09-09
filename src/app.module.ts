@@ -10,6 +10,7 @@ import { UsersService } from './users/users.service';
 import { UsersModule} from './users/users.module';
 import { EventsModule} from './Events/events.module';
 import {EmailToClientHtmlService} from './shared/services/emailToClientHtml.service';
+import { RsvpModule } from './rsvp/rsvp.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import {EmailToClientHtmlService} from './shared/services/emailToClientHtml.serv
     UsersModule,
     EventsModule,
     MongooseModule.forRoot(MONGODB_CONNECTION_URL),
-    AuthModule
+    AuthModule,
+    RsvpModule
   ],
   controllers: [AppController],
   providers: [AppService,EmailToClientHtmlService ]
