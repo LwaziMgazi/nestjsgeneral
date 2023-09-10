@@ -43,5 +43,39 @@ export class RsvpService {
              throw new Error(error);
            }
     }
+
+   async sendClaimedGiftToUser(email :string){
+      try {
+        // let testAccount = await nodemailer.createTestAccount();
+          // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+          host: "smtp.mail.us-east-1.awsapps.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+                user: "lwazi@airstudent.co.za", // generated ethereal user
+                pass: "IloveGod@2", // generated ethereal password
+              },
+               tls:{
+           rejectUnauthorized:false
+         }
+         });
+         
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: '<lwazi@airstudent.co.za>', // sender address
+            to: email, // list of receivers
+            subject: "Thank you for the Gift!", // Subject line
+            text: "Gift Resgistery", // plain text body
+            html: `<b>Please verify by clicking link</b><br>`, // html body
+        });
+        console.log('Sent',info)
+        return info;
+
+       }catch(error) {
+         console.log(error);
+         throw new Error(error);
+       }
+    }
 }
 

@@ -11,6 +11,7 @@ import { UsersModule} from './users/users.module';
 import { EventsModule} from './Events/events.module';
 import {EmailToClientHtmlService} from './shared/services/emailToClientHtml.service';
 import { RsvpModule } from './rsvp/rsvp.module';
+import { GiftRegisteryModule } from './gift-registery/gift-registery.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { RsvpModule } from './rsvp/rsvp.module';
     EventsModule,
     MongooseModule.forRoot(MONGODB_CONNECTION_URL),
     AuthModule,
-    RsvpModule
+    RsvpModule,
+    GiftRegisteryModule
   ],
   controllers: [AppController],
   providers: [AppService,EmailToClientHtmlService ]
