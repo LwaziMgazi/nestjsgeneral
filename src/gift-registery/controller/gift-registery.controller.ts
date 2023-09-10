@@ -1,9 +1,10 @@
 import { Controller , Post, Body, Put, Param, Get} from '@nestjs/common';
 import { GiftRepository} from '../repositories/gifts.repository';
 import { IGiftList } from '../interfaces/gift-list.Interface';
+import {RsvpService} from '../../rsvp/rsvp.service';
 @Controller('gift-registery')
 export class GiftRegisteryController {
-    constructor(private giftRepo: GiftRepository ){
+    constructor(private giftRepo: GiftRepository, private rsvpService :RsvpService  ){
 
     }
 
@@ -13,8 +14,10 @@ export class GiftRegisteryController {
     }
 
     @Put('giftList/:id')
-    updateGiftList(@Param('id') id: string, @Body() reqBody: IGiftList) {
-        return this.giftRepo.updateGiftList(id,reqBody);
+  async  updateGiftList(@Param('id') id: string, @Body() reqBody: {giftList: IGiftList, metaData:any}) {
+        console.log(reqBody)
+        let emailreturn = this.rsvpService.sendClaimedGiftToUser(reqBody.metaData.email,reqBody.metaData.productName);
+        return this.giftRepo.updateGiftList(id,reqBody.giftList);
     }
 
     @Get('gift-list/:event')
@@ -32,6 +35,10 @@ export class GiftRegisteryController {
      giftList[0].items.splice(index,1);
      giftList[0].items.push(updatedItem);
 
-     return this.giftRepo.updateGiftList(giftList[0]._id.toString(), giftList[0]);
+     await this.giftRepo.updateGiftList(giftList[0]._id.toString(), giftList[0]);
+
+     return {
+        FromeUs: "THANK YOU"
+     }
     }
 }

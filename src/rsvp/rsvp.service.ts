@@ -44,7 +44,7 @@ export class RsvpService {
            }
     }
 
-   async sendClaimedGiftToUser(email :string){
+   async sendClaimedGiftToUser(email :string, giftName: string){
       try {
         // let testAccount = await nodemailer.createTestAccount();
           // create reusable transporter object using the default SMTP transport
@@ -62,12 +62,14 @@ export class RsvpService {
          });
          
         // send mail with defined transport object
+        let giftApi = `https://nestjsgeneralserver.onrender.com/gift-registery/gift/${email}/${giftName}`;
+        let encodedUrl= encodeURI(giftApi);
         let info = await transporter.sendMail({
             from: '<lwazi@airstudent.co.za>', // sender address
             to: email, // list of receivers
             subject: "Thank you for the Gift!", // Subject line
             text: "Gift Resgistery", // plain text body
-            html: `<b>Please verify by clicking link</b><br>`, // html body
+            html: `<b>Please verify by clicking link</b><br> <a href=${encodedUrl}> take gift of the list</a>`, // html body
         });
         console.log('Sent',info)
         return info;
