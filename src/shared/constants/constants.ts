@@ -1,0 +1,1 @@
+export const MONGODB_CONNECTION_URL= 'mongodb+srv://nestjs-admin:IloveGod2@cluster0.wxmek.mongodb.net/umaboItems?retryWrites=true&w=majority'
