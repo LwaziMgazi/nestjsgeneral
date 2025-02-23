@@ -1,4 +1,7 @@
 {
+  "engines": {
+  "node": "18.x"
+   },
   "name": "nest-general-purpose-server",
   "version": "0.0.1",
   "description": "",
