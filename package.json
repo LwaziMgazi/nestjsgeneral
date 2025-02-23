@@ -1,6 +1,6 @@
 {
   "engines": {
-  "node": "18.x"
+  "node": "18.20.4"
    },
   "name": "nest-general-purpose-server",
   "version": "0.0.1",
