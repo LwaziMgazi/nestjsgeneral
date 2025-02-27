@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,8 +16,7 @@ import { ScheduleTasksService } from './shared/services/schedule-tasks/schedule-
 import { BondAttackModule } from './bond-attack/bond-attack.module';
 import { HandleFilesModule } from './handle-files/handle-files.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { AppsMiddleware } from './middleware/apps.middle';
 @Module({
   imports: [
     EmailToClientModule, 
@@ -37,4 +36,8 @@ import { extname } from 'path';
   providers: [AppService,EmailToClientHtmlService, ScheduleTasksService , ScheduleTasksService]
  
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+      consumer.apply(AppsMiddleware).forRoutes('*');
+  }
+}

@@ -1,4 +1,4 @@
-import { Controller, Get,Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get,Post, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import {BondAttackRepository} from '../repositories/bond-attack.repository';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {Express} from 'express';
@@ -26,8 +26,8 @@ export class BondAttackController {
                 },     
               })
     }))
-    async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const bondAttackDoc = await this.bondAttackService.updatedBondAttackDocBuUploaded(file);
+    async uploadFile(@Headers() headers: any, @UploadedFile() file: Express.Multer.File) {
+    const bondAttackDoc = await this.bondAttackService.updatedBondAttackDocByUploaded(headers);
     return { 
         message: 'File uploaded successfully!',
         filename: file.filename, 

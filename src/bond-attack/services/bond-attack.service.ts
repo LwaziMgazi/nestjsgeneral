@@ -42,15 +42,16 @@ export class BondAttackService {
           console.error('Error occured',err)
         }    
   }
-  async updatedBondAttackDocBuUploaded(fileInfo: any){
+  async updatedBondAttackDocByUploaded( headers: any){
       try{
+        const teamWhoSentReq = headers['source'];
         let currentKey;
         let bondStovelDoc = await this.bondAttackRepository.findBondAttackDoc();
         let allMembers = bondStovelDoc[0].membersByPlace;
         let currentMembers: any;
         let keys = Object.keys(allMembers);
         keys.forEach(key=>{
-          if(fileInfo.filename.includes(key)){
+          if(teamWhoSentReq === key){
             currentKey = key;
             currentMembers = allMembers[key];
           }
