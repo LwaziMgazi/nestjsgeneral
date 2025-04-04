@@ -88,4 +88,44 @@ export class BondAttackService {
       currentTeam};
   }
 
+  calculateGoalsOfBond(
+    payload :{
+      principal: number, // Loan amount
+      annualRate: number, // Annual interest rate (e.g., 10 for 10%)
+      years: number, // Loan term in years
+      extraPayment: number, // Extra monthly payment
+    }
+  ){
+
+       // Convert annual rate to monthly
+       const r = (payload.annualRate / 100) / 12;
+       const N = payload.years * 12; // Convert years to months
+   
+       // Calculate original monthly payment
+       const A = (payload.principal * r) / (1 - Math.pow(1 + r, -N));
+   
+       // Calculate total interest without extra payments
+       const totalInterestOriginal = (A * N) - payload.principal;
+   
+       // New monthly payment after adding extra payment
+       const A_new = A + payload.extraPayment;
+   
+       // Calculate new loan duration with extra payments
+       const N_new = Math.ceil(Math.log(A / (A_new - r * payload.principal)) / Math.log(1 + r));
+   
+       // Calculate total interest with extra payments
+       const totalInterestNew = (A_new * N_new) - payload.principal;
+   
+       // Calculate interest saved
+       const interestSaved = totalInterestOriginal - totalInterestNew;
+   
+       return {
+         originalTerm: `${Math.floor(N / 12)} years (${N} months)`,
+         newTerm: `${Math.floor(N_new / 12)} years (${N_new} months)`,
+         totalInterestWithoutExtra: `R${totalInterestOriginal.toFixed(2)}`,
+         totalInterestWithExtra: `R${totalInterestNew.toFixed(2)}`,
+         interestSaved: `R${interestSaved.toFixed(2)}`,
+       };
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Controller, Get,Post, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
+import { Controller, Get,Post, UseInterceptors, UploadedFile, Headers, Body, Param } from '@nestjs/common';
 import {BondAttackRepository} from '../repositories/bond-attack.repository';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {Express} from 'express';
@@ -35,6 +35,16 @@ export class BondAttackController {
         url: `/uploads/${file.filename}`,
         bondAttackDoc
       };
+    }
+
+    @Post('goals')
+    async getGoalsForBondStokvel(@Body() payload: any){
+      return this.bondAttackService.calculateGoalsOfBond(payload)
+    }
+
+    @Post('update/:id')
+    updateBondAttackDoc(@Param('id') id: string, @Body() changes: any){
+      return this.bondAttackRepository.updateBondAttackDo(id, changes)
     }
 
 
