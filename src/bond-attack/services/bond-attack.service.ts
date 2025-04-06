@@ -3,7 +3,7 @@ import {BondAttackRepository} from '../repositories/bond-attack.repository';
 import * as twilio from 'twilio';
 import { bondTimeTable } from '../constants/bondTimeTable';
 import * as dayjs from 'dayjs';
-import {ILives, IBondAttackMemmber} from '../../model/familyBondStockvel.interface';
+import {ILives, IBondAttackMemmber, ITeamStatusRes} from '../../model/familyBondStockvel.interface';
 import {AppConfig} from '../../config/app.config';
 @Injectable()
 export class BondAttackService {
@@ -126,6 +126,39 @@ export class BondAttackService {
          totalInterestWithExtra: `R${totalInterestNew.toFixed(2)}`,
          interestSaved: `R${interestSaved.toFixed(2)}`,
        };
+  }
+
+  async getStokvelTeamStatus(): Promise<ITeamStatusRes[]>{
+    let response: Array<ITeamStatusRes> =[];
+    let doc = await this.bondAttackRepository.findBondAttackDoc();
+    let currentTeamPosition;
+    Object.keys(doc[0].membersByPlace).forEach(memmber=>{
+      let tempHolder : ITeamStatusRes ={
+        team: memmber,
+        status:'pending',
+        position: 0
+      };
+      for(const key in bondTimeTable){
+        if(tempHolder.team === key){
+          tempHolder.position = bondTimeTable[key].position;
+        }
+
+      };
+       let currentTeam = this.getCurrentRecievingMembers(doc);
+       currentTeamPosition = bondTimeTable[currentTeam.currentRecievingkey].position;
+       if(currentTeam.currentRecievingkey === memmber){
+         tempHolder.status = 'active';
+       } else if(tempHolder.position< currentTeamPosition) {
+        tempHolder.status = 'completed';
+       } else if(tempHolder.position> currentTeamPosition){
+        tempHolder.status = 'pending';
+       }
+
+       response.push(tempHolder);
+
+    });
+
+       return response;
   }
 
 }

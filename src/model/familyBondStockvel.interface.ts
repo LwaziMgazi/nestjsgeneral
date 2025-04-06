@@ -15,3 +15,9 @@ export interface IBondAttackMemmber  {
     cellNumber: string;
     payDay: String;
   }
+
+  export interface ITeamStatusRes {
+    team: string;
+    status: 'completed'| 'pending' | 'active';
+    position: number;
+  }

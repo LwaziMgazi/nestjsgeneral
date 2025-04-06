@@ -47,6 +47,10 @@ export class BondAttackController {
       return this.bondAttackRepository.updateBondAttackDo(id, changes)
     }
 
+    @Get('/team-statuses')
+    getTeamStatuses(){
+      return this.bondAttackService.getStokvelTeamStatus();
+    }
 
 
     
