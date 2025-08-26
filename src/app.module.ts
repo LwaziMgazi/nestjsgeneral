@@ -17,6 +17,9 @@ import { BondAttackModule } from './bond-attack/bond-attack.module';
 import { HandleFilesModule } from './handle-files/handle-files.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { AppsMiddleware } from './middleware/apps.middle';
+import { ChambersService } from './chambers/services/chambers.service';
+import { ChambersController } from './chambers/controllers/chambers.controller';
+import { ChambersModule } from './chambers/chambers.module';
 @Module({
   imports: [
     EmailToClientModule, 
@@ -30,10 +33,11 @@ import { AppsMiddleware } from './middleware/apps.middle';
     ScheduleModule.forRoot(),
     BondAttackModule,
     HandleFilesModule,
-    MulterModule
+    MulterModule,
+    ChambersModule
   ],
-  controllers: [AppController],
-  providers: [AppService,EmailToClientHtmlService, ScheduleTasksService , ScheduleTasksService]
+  controllers: [AppController, ChambersController],
+  providers: [AppService,EmailToClientHtmlService, ScheduleTasksService , ScheduleTasksService, ChambersService]
  
 })
 export class AppModule implements NestModule {

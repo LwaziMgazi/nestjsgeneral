@@ -9,6 +9,6 @@ export class ScheduleTasksService {
 
     @Cron('5 4 * * *')
     async handleCron() {
-        await this.bondAttackService.performBondSmsSendingTasks()
+        // await this.bondAttackService.performBondSmsSendingTasks()
       }
 }

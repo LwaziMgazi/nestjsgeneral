@@ -14,12 +14,12 @@ export class EmailToClientController{
         // let testAccount = await nodemailer.createTestAccount();
           // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-          host: "smtp.mail.us-east-1.awsapps.com",
+          host: "mail20.domains.co.za",
           port: 465,
           secure: true, // true for 465, false for other ports
           auth: {
-                user: "lwazi@airstudent.co.za", // generated ethereal user
-                pass: "IloveGod@2", // generated ethereal password
+                user: "info@khon.co.za", // generated ethereal user
+                pass: "@ndabaKhon#231", // generated ethereal password
               },
                tls:{
            rejectUnauthorized:false
@@ -28,7 +28,7 @@ export class EmailToClientController{
          
         // send mail with defined transport object
         let info = await transporter.sendMail({
-            from: '<lwazi@airstudent.co.za>', // sender address
+            from: '<info@khon.co.za>', // sender address
             to: emailContent.emailTo, // list of receivers
             subject: "New al", // Subject line
             text: "Order Details", // plain text body

@@ -1,14 +1,6 @@
 import { Injectable,Inject} from '@nestjs/common';
 import {UsersRepository} from './repositories/users.repository';
-
-export type User = {
-id : number;
-username : string;
-email : string;
-password: string;
-eventName?: string;
-
-}
+import { IUsers} from './schemas/users.schema';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +11,7 @@ export class UsersService {
     
    
 
-    async findOne(username: string): Promise<User | undefined>{
+    async findOne(username: string): Promise<IUsers | undefined>{
          let users = (await this.usersRepository.findAllUsers()).find(users=>users.email===username);
     
         return users;
